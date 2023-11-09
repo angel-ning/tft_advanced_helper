@@ -1,6 +1,7 @@
 import time
 import pyautogui as pg
 import keyboard
+import os
 
 # import pygetwindow as gw
 # from pytesseract.pytesseract import Output
@@ -11,11 +12,16 @@ from logger import *
 
 AutoPlayFlag = True
 
-# Initialize the logger
-log_path = 'log\\%s.log' % time.strftime('%Y_%m_%d_%H_%M_%S')
+# Define the path for the subfolder and log file
+log_subfolder = 'log'
+log_filename = '%s.log' % time.strftime('%Y_%m_%d_%H_%M_%S')
+log_path = os.path.join(log_subfolder, log_filename)
+
+# Create the subfolder if it doesn't exist
+os.makedirs(log_subfolder, exist_ok=True)
+
+# Create the logger object with the path
 logger = Logger(log_path)
-
-
 
 # def location_check(x1, y1, x2, y2, target):
 #     im = ImageGrab.grab(bbox=(x1, y1, x2, y2))  # X1,Y1,X2,Y2
@@ -69,7 +75,7 @@ def pg_main():
             # 游戏开始时间
             game_start = time.time()
             logger.write_log("[%s] pg_find_match" % get_time_fmt_str())
-            pg_find_match()
+            pg_find_match(logger)
             logger.write_log("[%s] pg_wait_loading" % get_time_fmt_str())
             pg_wait_loading()
             logger.write_log("[%s] pg_wait_stage_3_2" % get_time_fmt_str())

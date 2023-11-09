@@ -132,9 +132,9 @@ def accept_match(logger):
     logger.write_log("10次超时未找到对局！")
     return False
 
-def pg_find_match():
+def pg_find_match(logger):
     click_find_match()
-    return accept_match()
+    return accept_match(logger)
 
 def pg_wait_loading():
     while True:
